@@ -7,12 +7,14 @@ import { Product } from '@/store/cartStore';
 
 interface ProductCardProps {
   product: Product;
-  onAddToCart: (product: Product) => void;
+  onAddToCart?: (product: Product) => void;
 }
 
 export const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
   const handleAddToCart = () => {
-    onAddToCart(product);
+    if (onAddToCart) {
+      onAddToCart(product);
+    }
     alert(`${product.name} has been added to your cart!`);
   };
 
@@ -24,8 +26,10 @@ export const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             src={product.image}
             alt={product.name}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             style={{ objectFit: 'cover' }}
             className="transition-transform duration-300 hover:scale-105"
+            priority={false}
           />
         </div>
       </Link>
@@ -41,12 +45,13 @@ export const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
           <Button className="w-full" onClick={handleAddToCart}>
             Add to Cart
           </Button>
-          <Button variant="outline" asChild>
-            <Link href={`/product/${product.slug}`}>View</Link>
+          <Button variant="outline" onClick={() => window.location.href = `/product/${product.slug}`}>
+            View
           </Button>
         </div>
       </div>
     </div>
   );
 };
+
 

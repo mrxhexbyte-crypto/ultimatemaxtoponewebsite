@@ -1,52 +1,47 @@
 'use client';
 
-import { useCart } from '@/store/cartStore';
-import { CartItem } from '@/components/cart/CartItem';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useState } from 'react';
 
-const CartPage = () => {
-  const { items, totalItems, totalPriceUsd, clearCart } = useCart();
+export default function CartPage() {
+  const [cart, setCart] = useState<any[]>([]);
 
   return (
-    <main className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold tracking-tight mb-8">Your Cart</h1>
-      {items.length > 0 ? (
-        <div className="grid md:grid-cols-3 gap-12">
-          <div className="md:col-span-2">
-            {items.map((item) => (
-              <CartItem key={item.id} item={item} />
-            ))}
-          </div>
-          <div>
-            <div className="border rounded-lg p-6 bg-background/50">
-              <h2 className="text-2xl font-bold mb-4">Summary</h2>
-              <div className="flex justify-between mb-2">
-                <span className="text-muted-foreground">Total Items:</span>
-                <span>{totalItems()}</span>
-              </div>
-              <div className="flex justify-between font-bold text-lg mb-4">
-                <span>Total Price:</span>
-                <span>${totalPriceUsd().toFixed(2)}</span>
-              </div>
-              <Button className="w-full" size="lg">Proceed to Checkout</Button>
-              <Button variant="outline" className="w-full mt-2" onClick={clearCart}>
-                Clear Cart
-              </Button>
-            </div>
-          </div>
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 to-slate-900">
+      <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          <Link href="/" className="text-xl sm:text-2xl font-bold text-white hover:text-cyan-400 transition">
+            ZAYX-OS
+          </Link>
+          <Link href="/" className="px-4 sm:px-6 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 font-medium text-sm sm:text-base transition">
+            ← Back
+          </Link>
         </div>
-      ) : (
-        <div className="text-center py-16 border rounded-lg bg-background/50">
-          <h2 className="text-2xl font-bold">Your cart is empty.</h2>
-          <p className="text-muted-foreground mt-2">Explore our products and start building your on-chain future.</p>
-          <Button asChild className="mt-6">
-            <Link href="/">Continue Shopping</Link>
-          </Button>
-        </div>
-      )}
-    </main>
-  );
-};
+      </header>
 
-export default CartPage;
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-8">Shopping Cart</h1>
+        
+        {cart.length === 0 ? (
+          <div className="text-center py-16">
+            <p className="text-slate-400 text-lg mb-8">Your cart is empty</p>
+            <Link href="/products" className="inline-block px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg font-bold hover:shadow-lg hover:shadow-cyan-500/50 transition">
+              Continue Shopping
+            </Link>
+          </div>
+        ) : (
+          <div className="bg-slate-800/30 border border-slate-700 rounded-lg p-6">
+            <p className="text-slate-300">Cart feature coming soon with Web3 integration</p>
+          </div>
+        )}
+      </main>
+
+      <footer className="border-t border-slate-800 bg-slate-950 py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center text-slate-400">
+          <p className="text-sm sm:text-base">ZAYX-OS - Decentralized Commerce Platform</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
+

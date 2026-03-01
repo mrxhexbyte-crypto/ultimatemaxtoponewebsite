@@ -1,7 +1,44 @@
+# Dependencies
 node_modules/
+.pnpm-store/
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+bun.lockb
+
+# Build outputs
 .next/
-coverage/
+out/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
+
+# Logs
+logs/
 *.log
-.env*
-!.env.example
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+.vitest/
+coverage/
+.nyc_output/
+
+# Misc
+.cache/
+*.pem
+

@@ -1,178 +1,192 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
-import { PRODUCTS } from '@/lib/products';
+import { motion } from 'framer-motion';
+import { ArrowRight, ShoppingCart, Zap, Shield, Users } from 'lucide-react';
 
-export default function Home() {
-  const [selectedProduct, setSelectedProduct] = useState<any>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+export default function HomePage() {
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
 
-  const filteredProducts = PRODUCTS.slice(0, 6).filter(p => 
-    p.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } },
+  };
 
-  const testimonials = [
-    { name: 'Alex Chen', role: 'Web3 Developer', text: 'ZAYX-OS revolutionized how I manage digital assets.' },
-    { name: 'Sarah Johnson', role: 'NFT Collector', text: 'The NFT receipt system is game-changing.' },
-    { name: 'Marcus Williams', role: 'DAO Member', text: 'Seamless governance integration!' }
+  const features = [
+    { icon: ShoppingCart, title: "Global Commerce", description: "Buy physical & digital products seamlessly" },
+    { icon: Zap, title: "Instant Payments", description: "Crypto transactions confirmed in seconds" },
+    { icon: Shield, title: "Secure & Verifiable", description: "Blockchain-backed transactions with NFT receipts" },
+    { icon: Users, title: "DAO Governance", description: "Community votes on platform decisions" },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 to-slate-900">
-      <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-between items-center mb-4">
-            <h1 className="text-xl sm:text-2xl font-bold text-white">ZAYX-OS</h1>
-            <div className="flex gap-2 sm:gap-4 items-center">
-              <Link href="/cart" className="relative px-3 sm:px-4 py-2 bg-cyan-600/20 border border-cyan-600 text-cyan-400 rounded-lg hover:bg-cyan-600/30 font-medium text-sm sm:text-base transition">
-                Cart
-              </Link>
-              <button className="px-4 sm:px-6 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 font-medium text-sm sm:text-base transition">
-                Connect Wallet
-              </button>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-[#050510] via-[#0a0a1a] to-[#050510]">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <Link href="/" className="text-2xl font-bold gradient-text-blue">
+            ZAYX-OS
+          </Link>
+          <div className="flex gap-8 items-center">
+            <Link href="/products" className="text-white/80 hover:text-white transition">Products</Link>
+            <Link href="/dao" className="text-white/80 hover:text-white transition">DAO</Link>
+            <button className="btn-primary">Connect Wallet</button>
           </div>
-          <input 
-            type="text"
-            placeholder="Search products..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 text-sm sm:text-base focus:outline-none focus:border-cyan-500"
-          />
         </div>
-      </header>
+      </nav>
 
-      <main>
-        <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 sm:mb-6">
-              Web3 E-Commerce
-            </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-slate-400 mb-8 sm:mb-12 max-w-3xl mx-auto">
-              Decentralized marketplace for physical and digital products. Crypto payments, NFT receipts, DAO governance.
+      {/* Hero Section */}
+      <section className="min-h-screen pt-24 px-6 flex flex-col justify-center items-center relative overflow-hidden">
+        {/* Gradient Orb Background */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl opacity-50"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl opacity-50"></div>
+        </div>
+
+        <motion.div 
+          className="relative z-10 max-w-4xl text-center"
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
+          {/* Badge */}
+          <motion.div variants={item} className="inline-block mb-6">
+            <div className="glass px-4 py-2 rounded-full">
+              <span className="text-cyan-400 text-sm font-semibold">🚀 Next-Gen Web3 Commerce</span>
+            </div>
+          </motion.div>
+
+          {/* Headline */}
+          <motion.h1 
+            variants={item}
+            className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
+          >
+            <span className="gradient-text-blue">The Future</span>
+            <br />
+            <span className="gradient-text-pink">of Shopping</span>
+            <br />
+            <span className="text-white">Is On-Chain</span>
+          </motion.h1>
+
+          {/* Description */}
+          <motion.p 
+            variants={item}
+            className="text-lg md:text-xl text-white/60 mb-12 max-w-2xl mx-auto"
+          >
+            Buy anything with crypto. Get NFT receipts. Vote on the platform's future. Welcome to decentralized commerce.
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div variants={item} className="flex gap-4 justify-center mb-20 flex-wrap">
+            <Link href="/products" className="btn-primary flex items-center gap-2">
+              Enter the Store
+              <ArrowRight size={20} />
+            </Link>
+            <button className="btn-secondary">Learn More</button>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div variants={item} className="grid grid-cols-3 gap-8 max-w-lg mx-auto">
+            <div className="glass p-4 rounded-xl">
+              <div className="text-2xl font-bold text-cyan-400">2.5k</div>
+              <div className="text-sm text-white/60">Products</div>
+            </div>
+            <div className="glass p-4 rounded-xl">
+              <div className="text-2xl font-bold text-violet-400">$4.2M</div>
+              <div className="text-sm text-white/60">Total Volume</div>
+            </div>
+            <div className="glass p-4 rounded-xl">
+              <div className="text-2xl font-bold text-emerald-400">8.5k</div>
+              <div className="text-sm text-white/60">Members</div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-24 px-6 relative">
+        <div className="max-w-7xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-5xl md:text-6xl font-bold mb-6">Why ZAYX-OS?</h2>
+            <p className="text-xl text-white/60 max-w-2xl mx-auto">
+              Built for the Web3 generation. Everything you need to shop, earn, and govern.
             </p>
-            <Link href="/products" className="inline-block px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 font-bold text-sm sm:text-base transition">
-              Launch App
-            </Link>
-          </div>
-        </section>
+          </motion.div>
 
-        <section id="features" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-slate-900/50">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-              <div className="p-6 sm:p-8 rounded-lg bg-slate-800/50 border border-slate-700 hover:border-cyan-500/50 transition cursor-pointer">
-                <div className="text-4xl mb-4">💳</div>
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-3">Crypto Payments</h3>
-                <p className="text-sm sm:text-base text-slate-400">ETH, USDC, USDT, DAI with instant settlement.</p>
-              </div>
-              <div className="p-6 sm:p-8 rounded-lg bg-slate-800/50 border border-slate-700 hover:border-cyan-500/50 transition cursor-pointer">
-                <div className="text-4xl mb-4">🎫</div>
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-3">NFT Receipts</h3>
-                <p className="text-sm sm:text-base text-slate-400">Automatic ERC-721 minting for proof of purchase.</p>
-              </div>
-              <div className="p-6 sm:p-8 rounded-lg bg-slate-800/50 border border-slate-700 hover:border-cyan-500/50 transition cursor-pointer">
-                <div className="text-4xl mb-4">🏛️</div>
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-3">DAO Governance</h3>
-                <p className="text-sm sm:text-base text-slate-400">Community voting and treasury control.</p>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, idx) => {
+              const Icon = feature.icon;
+              return (
+                <motion.div
+                  key={idx}
+                  className="glass p-8 rounded-2xl hover:bg-white/10 transition"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                >
+                  <Icon className="w-12 h-12 text-cyan-400 mb-4" />
+                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                  <p className="text-white/60">{feature.description}</p>
+                </motion.div>
+              );
+            })}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section id="products" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex justify-between items-center mb-12">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">Featured Products</h2>
-              <Link href="/products" className="text-cyan-400 hover:text-cyan-300 font-bold">View All →</Link>
-            </div>
-            {filteredProducts.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-slate-400 text-lg">No products found matching "{searchQuery}"</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                {filteredProducts.map((product) => (
-                  <div 
-                    key={product.id} 
-                    className="rounded-lg bg-slate-800/30 border border-slate-700 p-4 sm:p-6 hover:border-cyan-500/50 transition cursor-pointer"
-                    onClick={() => setSelectedProduct(product)}
-                  >
-                    <div className="w-full h-32 sm:h-40 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-lg mb-4 flex items-center justify-center text-5xl">
-                      {product.image}
-                    </div>
-                    <h3 className="text-base sm:text-lg font-bold text-white">{product.name}</h3>
-                    <p className="text-cyan-400 font-bold mt-2">{product.price} ETH</p>
-                    <Link 
-                      href={`/products/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="mt-4 block w-full py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-sm sm:text-base rounded font-medium transition text-center"
-                    >
-                      View Details
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            )}
+      {/* Footer */}
+      <footer className="border-t border-white/10 bg-white/5 py-12 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-8">
+          <div>
+            <h4 className="font-bold text-lg mb-4">ZAYX-OS</h4>
+            <p className="text-white/60">Decentralized commerce for everyone.</p>
           </div>
-        </section>
-
-        <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-slate-900/50">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8 sm:mb-12 text-center">Community Testimonials</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              {testimonials.map((testimonial, i) => (
-                <div key={i} className="p-6 sm:p-8 rounded-lg bg-slate-800/30 border border-slate-700">
-                  <p className="text-slate-300 mb-4 text-sm sm:text-base">"{testimonial.text}"</p>
-                  <p className="font-bold text-white">{testimonial.name}</p>
-                  <p className="text-cyan-400 text-sm">{testimonial.role}</p>
-                </div>
-              ))}
-            </div>
+          <div>
+            <h4 className="font-bold mb-4">Products</h4>
+            <ul className="space-y-2 text-white/60">
+              <li><Link href="/products" className="hover:text-white transition">Browse</Link></li>
+              <li><Link href="/products?type=physical" className="hover:text-white transition">Physical</Link></li>
+              <li><Link href="/products?type=digital" className="hover:text-white transition">Digital</Link></li>
+            </ul>
           </div>
-        </section>
-
-        <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 text-center">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">Ready to Get Started?</h2>
-            <p className="text-slate-400 mb-8 text-sm sm:text-base">Connect your wallet and join the Web3 commerce revolution.</p>
-            <Link href="/products" className="inline-block px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg font-bold text-sm sm:text-base hover:shadow-lg hover:shadow-cyan-500/50 transition">
-              Shop Now
-            </Link>
+          <div>
+            <h4 className="font-bold mb-4">Community</h4>
+            <ul className="space-y-2 text-white/60">
+              <li><Link href="/dao" className="hover:text-white transition">DAO</Link></li>
+              <li><a href="#" className="hover:text-white transition">Discord</a></li>
+              <li><a href="#" className="hover:text-white transition">Twitter</a></li>
+            </ul>
           </div>
-        </section>
-
-        {selectedProduct && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" onClick={() => setSelectedProduct(null)}>
-            <div className="bg-slate-900 rounded-lg p-6 max-w-sm w-full border border-slate-700" onClick={(e) => e.stopPropagation()}>
-              <div className="text-6xl mb-4 text-center">{selectedProduct.image}</div>
-              <h2 className="text-2xl font-bold text-white mb-2">{selectedProduct.name}</h2>
-              <p className="text-slate-300 mb-4">{selectedProduct.description}</p>
-              <p className="text-cyan-400 text-xl mb-4">{selectedProduct.price} ETH</p>
-              <Link 
-                href={`/products/${selectedProduct.name.toLowerCase().replace(/\s+/g, '-')}`}
-                onClick={() => setSelectedProduct(null)}
-                className="block w-full py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded font-bold transition text-center mb-2"
-              >
-                View Full Details
-              </Link>
-              <button 
-                onClick={() => setSelectedProduct(null)}
-                className="w-full py-3 bg-slate-700 hover:bg-slate-600 text-white rounded font-bold transition"
-              >
-                Close
-              </button>
-            </div>
+          <div>
+            <h4 className="font-bold mb-4">Legal</h4>
+            <ul className="space-y-2 text-white/60">
+              <li><a href="#" className="hover:text-white transition">Terms</a></li>
+              <li><a href="#" className="hover:text-white transition">Privacy</a></li>
+              <li><a href="#" className="hover:text-white transition">Contact</a></li>
+            </ul>
           </div>
-        )}
-      </main>
-
-      <footer className="border-t border-slate-800 bg-slate-950 py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center text-slate-400">
-          <p className="text-sm sm:text-base">ZAYX-OS - Decentralized Commerce Platform</p>
-          <p className="text-xs sm:text-sm mt-2">Web3 enabled. Community driven. Open source.</p>
+        </div>
+        <div className="border-t border-white/10 pt-8 flex justify-between items-center">
+          <p className="text-white/40">© 2026 ZAYX-OS. All rights reserved.</p>
+          <div className="text-white/40 text-sm">Powered by Web3 • pnpm</div>
         </div>
       </footer>
     </div>
   );
 }
+
 

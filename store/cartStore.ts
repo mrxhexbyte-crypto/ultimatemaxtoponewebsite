@@ -1,6 +1,3 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-
 export interface Product {
   id: number;
   name: string;
@@ -13,52 +10,36 @@ export interface Product {
   stock: number | Infinity;
 }
 
-interface CartItem extends Product {
+export interface CartItem extends Product {
   quantity: number;
 }
 
-interface CartState {
-  items: CartItem[];
-  addToCart: (product: Product) => void;
-  removeFromCart: (productId: number) => void;
-  clearCart: () => void;
-  totalItems: () => number;
-  totalPriceUsd: () => number;
-}
-
-export const useCart = create<CartState>()(
-  persist(
-    (set, get) => ({
-      items: [],
-      addToCart: (product) =>
-        set((state) => {
-          const existingItem = state.items.find((item) => item.id === product.id);
-          if (existingItem) {
-            return {
-              items: state.items.map((item) =>
-                item.id === product.id
-                  ? { ...item, quantity: item.quantity + 1 }
-                  : item
-              ),
-            };
-          }
-          return { items: [...state.items, { ...product, quantity: 1 }] };
-        }),
-      removeFromCart: (productId) =>
-        set((state) => ({
-          items: state.items.filter((item) => item.id !== productId),
-        })),
-      clearCart: () => set({ items: [] }),
-      totalItems: () =>
-        get().items.reduce((total, item) => total + item.quantity, 0),
-      totalPriceUsd: () =>
-        get().items.reduce(
-          (total, item) => total + item.priceUsd * item.quantity,
-          0
-        ),
-    }),
-    {
-      name: 'zayx-cart',
+// Simple in-memory cart store - use useState in components instead
+export const createCartFunctions = () => {
+  const addToCart = (items: CartItem[], product: Product): CartItem[] => {
+    const existingItem = items.find((item) => item.id === product.id);
+    if (existingItem) {
+      return items.map((item) =>
+        item.id === product.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
     }
-  )
-);
+    return [...items, { ...product, quantity: 1 }];
+  };
+
+  const removeFromCart = (items: CartItem[], productId: number): CartItem[] => {
+    return items.filter((item) => item.id !== productId);
+  };
+
+  const clearCart = (): CartItem[] => [];
+
+  const totalItems = (items: CartItem[]): number =>
+    items.reduce((total, item) => total + item.quantity, 0);
+
+  const totalPriceUsd = (items: CartItem[]): number =>
+    items.reduce((total, item) => total + item.priceUsd * item.quantity, 0);
+
+  return { addToCart, removeFromCart, clearCart, totalItems, totalPriceUsd };
+};
+

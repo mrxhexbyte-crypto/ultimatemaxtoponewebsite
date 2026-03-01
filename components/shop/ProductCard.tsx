@@ -3,19 +3,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { useCart, Product } from '@/store/cartStore';
-import { toast } from 'sonner';
+import { Product } from '@/store/cartStore';
 
 interface ProductCardProps {
   product: Product;
+  onAddToCart: (product: Product) => void;
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
-  const addToCart = useCart(state => state.addToCart);
-
+export const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
   const handleAddToCart = () => {
-    addToCart(product);
-    toast.success(`${product.name} has been added to your cart!`);
+    onAddToCart(product);
+    alert(`${product.name} has been added to your cart!`);
   };
 
   return (
@@ -51,3 +49,4 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     </div>
   );
 };
+

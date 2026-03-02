@@ -32,8 +32,9 @@
     "axios": "^1.7.9",
     "date-fns": "^3.6.0",
     "uuid": "^10.0.0",
-    "next-themes": "^0.3.0",
-    "zustand": "^4.4.0"
+    "@coinbase/onchainkit": "^0.31.0",
+    "viem": "^2.21.0",
+    "wagmi": "^2.11.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.15",

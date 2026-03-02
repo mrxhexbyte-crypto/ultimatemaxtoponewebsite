@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, DM_Sans } from "next/font/google";
 import "./globals.css";
+import { Web3Provider } from "@/lib/web3-provider";
+import { CommerceProvider } from "@/lib/commerce-context";
 
 const spaceGrotesk = Space_Grotesk({ 
   subsets: ["latin"],
@@ -62,10 +64,15 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
       <body className="bg-gradient-to-br from-[#050510] via-[#0a0a1a] to-[#050510] text-white overflow-x-hidden">
-        {children}
+        <Web3Provider>
+          <CommerceProvider>
+            {children}
+          </CommerceProvider>
+        </Web3Provider>
       </body>
     </html>
   );
 }
+
 
 

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, ShoppingCart, Zap, Shield, Users } from 'lucide-react';
+import { ConnectButton } from '@coinbase/onchainkit/wallet';
 
 export default function HomePage() {
   const container = {
@@ -39,7 +40,7 @@ export default function HomePage() {
           <div className="flex gap-8 items-center">
             <Link href="/products" className="text-white/80 hover:text-white transition">Products</Link>
             <Link href="/dao" className="text-white/80 hover:text-white transition">DAO</Link>
-            <button className="btn-primary">Connect Wallet</button>
+            <ConnectButton />
           </div>
         </div>
       </nav>
@@ -61,7 +62,7 @@ export default function HomePage() {
           {/* Badge */}
           <motion.div variants={item} className="inline-block mb-6">
             <div className="glass px-4 py-2 rounded-full">
-              <span className="text-cyan-400 text-sm font-semibold">🚀 Next-Gen Web3 Commerce</span>
+              <span className="text-cyan-400 text-sm font-semibold">🚀 Web3 Commerce with OnchainKit</span>
             </div>
           </motion.div>
 
@@ -82,7 +83,7 @@ export default function HomePage() {
             variants={item}
             className="text-lg md:text-xl text-white/60 mb-12 max-w-2xl mx-auto"
           >
-            Buy anything with crypto. Get NFT receipts. Vote on the platform's future. Welcome to decentralized commerce.
+            Powered by Coinbase OnchainKit. Buy with crypto. Get NFT receipts. Vote on the platform's future. Welcome to decentralized commerce.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -123,7 +124,7 @@ export default function HomePage() {
           >
             <h2 className="text-5xl md:text-6xl font-bold mb-6">Why ZAYX-OS?</h2>
             <p className="text-xl text-white/60 max-w-2xl mx-auto">
-              Built for the Web3 generation. Everything you need to shop, earn, and govern.
+              Built for the Web3 generation with enterprise-grade infrastructure. Everything you need to shop, earn, and govern.
             </p>
           </motion.div>
 
@@ -153,7 +154,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-8">
           <div>
             <h4 className="font-bold text-lg mb-4">ZAYX-OS</h4>
-            <p className="text-white/60">Decentralized commerce for everyone.</p>
+            <p className="text-white/60">Web3 commerce for everyone, powered by Coinbase OnchainKit.</p>
           </div>
           <div>
             <h4 className="font-bold mb-4">Products</h4>
@@ -182,11 +183,12 @@ export default function HomePage() {
         </div>
         <div className="border-t border-white/10 pt-8 flex justify-between items-center">
           <p className="text-white/40">© 2026 ZAYX-OS. All rights reserved.</p>
-          <div className="text-white/40 text-sm">Powered by Web3 • pnpm</div>
+          <div className="text-white/40 text-sm">Powered by Web3 • OnchainKit • pnpm</div>
         </div>
       </footer>
     </div>
   );
 }
+
 
 

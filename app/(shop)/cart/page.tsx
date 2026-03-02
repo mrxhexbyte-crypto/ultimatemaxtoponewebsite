@@ -1,6 +1,5 @@
 'use client';
 
-import { ConnectButton } from '@coinbase/onchainkit/wallet';
 import { useCommerce } from '@/lib/commerce-context';
 import Link from 'next/link';
 import { Trash2 } from 'lucide-react';
@@ -17,7 +16,6 @@ export default function CartPage() {
           </Link>
           <div className="flex gap-4 items-center">
             <span className="text-white/60">Cart ({cart.length})</span>
-            <ConnectButton />
           </div>
         </div>
       </nav>

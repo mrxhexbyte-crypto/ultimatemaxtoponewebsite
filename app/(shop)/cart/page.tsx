@@ -8,25 +8,6 @@ import { Trash2 } from 'lucide-react';
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, clearCart, totalPrice } = useCommerce();
 
-  const handleCheckout = async () => {
-    if (cart.length === 0) return;
-    
-    // Prepare charge data for Coinbase Commerce
-    const chargeData = {
-      name: 'ZAYX-OS Order',
-      description: `${cart.length} items`,
-      local_price: {
-        amount: totalPrice().toFixed(2),
-        currency: 'USD',
-      },
-      pricing_type: 'fixed_price',
-      redirect_url: `${window.location.origin}/checkout/success`,
-      cancel_url: `${window.location.origin}/cart`,
-    };
-    
-    console.log('[v0] Checkout initiated with data:', chargeData);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#050510] via-[#0a0a1a] to-[#050510]">
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10">
@@ -59,7 +40,7 @@ export default function CartPage() {
                   <div className="flex-1">
                     <h3 className="text-xl font-bold mb-2">{item.name}</h3>
                     <p className="text-white/60 text-sm mb-2">{item.description}</p>
-                    <p className="text-cyan-400 font-bold">{item.price} ETH</p>
+                    <p className="text-cyan-400 font-bold">${(item.price * item.quantity * 2400).toFixed(2)}</p>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg">
@@ -92,28 +73,26 @@ export default function CartPage() {
               <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-white/60">
-                  <span>Subtotal</span>
-                  <span>{totalPrice().toFixed(3)} ETH</span>
+                  <span>Items</span>
+                  <span>{cart.length}</span>
                 </div>
                 <div className="flex justify-between text-white/60">
-                  <span>Network Fee</span>
-                  <span>0.002 ETH</span>
+                  <span>Subtotal</span>
+                  <span>${(totalPrice() * 2400).toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-white/60">
+                  <span>Processing Fee</span>
+                  <span>${(totalPrice() * 2400 * 0.029).toFixed(2)}</span>
                 </div>
                 <div className="border-t border-white/10 pt-4 flex justify-between text-xl font-bold">
                   <span>Total</span>
-                  <span className="text-cyan-400">{(totalPrice() + 0.002).toFixed(3)} ETH</span>
+                  <span className="text-cyan-400">${(totalPrice() * 2400 * 1.029).toFixed(2)}</span>
                 </div>
               </div>
-              <button
-                onClick={handleCheckout}
-                className="btn-primary w-full mb-3"
-              >
+              <Link href="/checkout" className="btn-primary w-full text-center block mb-3">
                 Proceed to Checkout
-              </button>
-              <Link
-                href="/products"
-                className="btn-secondary w-full text-center block"
-              >
+              </Link>
+              <Link href="/products" className="btn-secondary w-full text-center block">
                 Continue Shopping
               </Link>
               <button
@@ -129,4 +108,5 @@ export default function CartPage() {
     </div>
   );
 }
+
 

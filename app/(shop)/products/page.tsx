@@ -1,9 +1,10 @@
 'use client';
 
-import { ConnectButton } from '@coinbase/onchainkit/wallet';
+import { ConnectButton } from '@/components/wallet/ConnectButton';
 import Link from 'next/link';
 import { ShoppingCart } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useCommerce } from '@/lib/commerce-context';
 
 export default function ProductsPage() {
   const { products, addToCart } = useCommerce();
@@ -18,6 +19,8 @@ export default function ProductsPage() {
           <div className="flex gap-4 items-center">
             <Link href="/cart" className="flex items-center gap-2 text-white/80 hover:text-white transition">
               <ShoppingCart size={20} />
+              Cart
+            </Link>
             <ConnectButton />
           </div>
         </div>

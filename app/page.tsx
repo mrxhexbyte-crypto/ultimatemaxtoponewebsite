@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, ShoppingCart, Zap, Shield, Users } from 'lucide-react';
-import { ConnectButton } from '@coinbase/onchainkit/wallet';
+import { ConnectButton } from '@/components/wallet/ConnectButton';
 
 export default function HomePage() {
   const container = {

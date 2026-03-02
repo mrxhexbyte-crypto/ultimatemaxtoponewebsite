@@ -3,19 +3,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { useCart, Product } from '@/store/cartStore';
-import { toast } from 'sonner';
+import { Product } from '@/store/cartStore';
 
 interface ProductCardProps {
   product: Product;
+  onAddToCart?: (product: Product) => void;
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
-  const addToCart = useCart(state => state.addToCart);
-
+export const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
   const handleAddToCart = () => {
-    addToCart(product);
-    toast.success(`${product.name} has been added to your cart!`);
+    if (onAddToCart) {
+      onAddToCart(product);
+    }
+    alert(`${product.name} has been added to your cart!`);
   };
 
   return (
@@ -26,8 +26,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             src={product.image}
             alt={product.name}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             style={{ objectFit: 'cover' }}
             className="transition-transform duration-300 hover:scale-105"
+            priority={false}
           />
         </div>
       </Link>
@@ -43,11 +45,13 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <Button className="w-full" onClick={handleAddToCart}>
             Add to Cart
           </Button>
-          <Button variant="outline" asChild>
-            <Link href={`/product/${product.slug}`}>View</Link>
+          <Button variant="outline" onClick={() => window.location.href = `/product/${product.slug}`}>
+            View
           </Button>
         </div>
       </div>
     </div>
   );
 };
+
+
